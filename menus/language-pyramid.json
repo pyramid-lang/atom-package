@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle language-pyramid",
+        "command": "language-pyramid:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "language-pyramid",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "language-pyramid:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

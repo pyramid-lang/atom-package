@@ -1,0 +1,102 @@
+scopeName: 'source.pyramid'
+name: 'Pyramid'
+fileTypes: ['pmd']
+repository: {
+  core_types: {
+    name: 'storage.type.core'
+    match: '\\b(var|bool|string|u32|i32|u64|i64|f32|f64)\\b'
+  }
+  string_literal: {
+    name: 'string.quoted.double'
+    begin: '"'
+    end: '"'
+  }
+  line_comment: {
+    name: 'comment.double-slash'
+    'match': '\\/\\/.*'
+  }
+  block_comment: {
+    name: 'comment.block'
+    begin: '\\/\\*'
+    end: '\\*\\/'
+  }
+  control_keywords: {
+    name: 'keyword.control'
+    match: '\\b(if|else|or|return|while)\\b'
+  }
+  self: {
+    name: 'variable.language.self'
+    match: '\\bself\\b'
+  }
+  storage_modifiers: {
+    name: 'storage.modifier'
+    match: '\\b(public|static)\\b'
+  }
+  operators: {
+    name: 'keyword.operator'
+    match: '\\b(and|or|not|is|\=)\\b'
+  }
+  constants: {
+    patterns: [
+      {
+        name: 'constant.language'
+        match: '\\b(true|false)\\b',
+      }
+      {
+        name: 'constant.numeric'
+        match: '\\b-?[0-9]+(.[0-9]+)?\\b'
+      }
+    ]
+  }
+  all_comments: {
+    patterns: [
+      { include: '#line_comment'}
+      { include: '#block_comment'}
+    ]
+  }
+}
+patterns: [
+  # Comments
+  {
+    begin: '\\b(func)\\b'
+    end: '{'
+    beginCaptures: {
+      1: {name: 'storage.type'}
+      # 3: {name: 'variable.parameter'}
+    }
+    patterns: [
+      {
+        begin: '(\\b[a-z][A-Za-z0-9_]*\\s*)\\('
+        end: '\\)'
+        beginCaptures: {
+          1: {name: 'entity.name.type.function'}
+        }
+        contentName: 'variable.parameter'
+      }
+    ]
+    # captures:
+    #   1: {name: 'storage.type'}
+    #   2: {name: 'entity.name.type.class'}
+    # patterns: [
+    #   { include: '#core_types'}
+    #   { include: '#self'}
+    #   { include: '#storage_modifiers'}
+    # ]
+    name: 'meta.function'
+  }
+  # {
+  #   match: '\\b([A-Z][a-z]*)\\b'
+  #   captures:{
+  #     1: {name: 'entity.name.type.class'}
+  #   }
+  # }
+
+  # Other stuff
+
+  { include: '#control_keywords'}
+  { include: '#core_types'}
+  { include: '#string_literal'}
+  { include: '#all_comments'}
+  { include: '#constants'}
+  { include: '#operators'}
+]
